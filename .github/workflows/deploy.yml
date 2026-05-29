@@ -13,6 +13,9 @@ permissions:
   id-token: write
 
 # Povolit jen jeden běžící deploy najednou.
+# Poznámka: deploy-pages spouštěj vždy jako NOVÝ běh (push / Run workflow),
+# nikdy přes „Re-run jobs" — re-run nahraje artefakt podruhé a deploy pak
+# selže s „Multiple artifacts named github-pages".
 concurrency:
   group: pages
   cancel-in-progress: true
