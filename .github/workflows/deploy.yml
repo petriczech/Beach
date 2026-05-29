@@ -7,29 +7,19 @@ on:
       - main
   workflow_dispatch:
 
+# Pro publikaci do větve gh-pages je potřeba zápis do obsahu repozitáře.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# Povolit jen jeden běžící deploy najednou.
-# Poznámka: deploy-pages spouštěj vždy jako NOVÝ běh (push / Run workflow),
-# nikdy přes „Re-run jobs" — re-run nahraje artefakt podruhé a deploy pak
-# selže s „Multiple artifacts named github-pages".
 concurrency:
-  group: pages
+  group: pages-deploy
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # Nastaví (a v případě potřeby i zapne) GitHub Pages pro tento repozitář.
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -39,16 +29,11 @@ jobs:
         env:
           # Repozitář je petriczech/beach → stránky běží na /beach/.
           VITE_BASE: /beach/
-      - uses: actions/upload-pages-artifact@v3
+      # Publikuje obsah dist/ do větve gh-pages. Pages pak servírují tu větev.
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
