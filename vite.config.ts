@@ -2,9 +2,10 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
-// Pokud se appka nasadí do podadresáře (např. GitHub Pages), uprav `base`.
+// Na GitHub Pages běží appka v podadresáři (např. /beach/). Workflow nastaví
+// VITE_BASE; lokálně se použije relativní './'.
 export default defineConfig({
-  base: './',
+  base: process.env.VITE_BASE || './',
   plugins: [
     react(),
     VitePWA({
