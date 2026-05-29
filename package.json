@@ -1,0 +1,36 @@
+{
+  "name": "beach-volleyball-zapis",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Aplikace na záznam plážového volejbalového zápasu (2v2) — PWA",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
+  },
+  "dependencies": {
+    "idb-keyval": "^6.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "vite-plugin-pwa": "^0.21.1",
+    "vitest": "^2.1.8"
+  }
+}
